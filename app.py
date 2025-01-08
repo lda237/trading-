@@ -541,16 +541,32 @@ class DashboardUI:
                     )
 
                     # Pre-fill form with calculated levels
-                    lot_size = st.number_input("Lot Size", min_value=0.01, max_value=10.0, value=0.1, step=0.01)
-                    sl_price = st.number_input("Stop Loss Price", 
-                                            value=float(trading_levels.stop_loss),
-                                            format="%.5f")
-                    tp1_price = st.number_input("Take Profit 1 Price", 
-                                            value=float(trading_levels.take_profit_1),
-                                            format="%.5f")
-                    tp2_price = st.number_input("Take Profit 2 Price", 
-                                            value=float(trading_levels.take_profit_2),
-                                            format="%.5f")
+                    lot_size = st.number_input(
+                        "Lot Size",
+                        min_value=0.01,
+                        max_value=10.0,
+                        value=0.1,
+                        step=0.01,
+                        key="trade_lot_size"
+                    )
+                    sl_price = st.number_input(
+                        "Stop Loss Price", 
+                        value=float(trading_levels.stop_loss),
+                        format="%.5f",
+                        key="trade_sl_price"
+                    )
+                    tp1_price = st.number_input(
+                        "Take Profit 1 Price", 
+                        value=float(trading_levels.take_profit_1),
+                        format="%.5f",
+                        key="trade_tp1_price"
+                    )
+                    tp2_price = st.number_input(
+                        "Take Profit 2 Price", 
+                        value=float(trading_levels.take_profit_2),
+                        format="%.5f",
+                        key="trade_tp2_price"
+                    )
 
                     # Display risk metrics
                     risk_cols = st.columns(2)
@@ -562,22 +578,44 @@ class DashboardUI:
                 except Exception as e:
                     st.warning(f"Could not calculate trading levels: {str(e)}")
                     # Fallback to basic form
-                    lot_size = st.number_input("Lot Size", min_value=0.01, max_value=10.0, value=0.1, step=0.01)
-                    sl_points = st.number_input("Stop Loss (points)", min_value=1, max_value=500, value=50)
-                    tp_points = st.number_input("Take Profit (points)", min_value=1, max_value=1000, value=100)
+                    lot_size = st.number_input(
+                        "Lot Size",
+                        min_value=0.01,
+                        max_value=10.0,
+                        value=0.1,
+                        step=0.01,
+                        key="fallback_lot_size"
+                    )
+                    sl_points = st.number_input(
+                        "Stop Loss (points)",
+                        min_value=1,
+                        max_value=500,
+                        value=50,
+                        key="fallback_sl_points"
+                    )
+                    tp_points = st.number_input(
+                        "Take Profit (points)",
+                        min_value=1,
+                        max_value=1000,
+                        value=100,
+                        key="fallback_tp_points"
+                    )
 
+            # Trading buttons
             cols = st.columns(2)
             with cols[0]:
                 buy_button = st.button(
                     "Buy",
                     type="primary",
-                    disabled=latest_signal and "SELL" in latest_signal.type.value
+                    disabled=latest_signal and "SELL" in latest_signal.type.value,
+                    key="buy_button"
                 )
             with cols[1]:
                 sell_button = st.button(
                     "Sell",
                     type="secondary",
-                    disabled=latest_signal and "BUY" in latest_signal.type.value
+                    disabled=latest_signal and "BUY" in latest_signal.type.value,
+                    key="sell_button"
                 )
     
 
