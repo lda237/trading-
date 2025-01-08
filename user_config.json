@@ -1,0 +1,1 @@
+{"theme": "dark", "default_symbol": "EURUSD", "default_timeframe": "H1", "chart_style": "candles", "indicators": ["RSI", "MACD", "BB"], "alert_sound": true, "email_alerts": false}
